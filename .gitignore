@@ -1,0 +1,7 @@
+**/__pycache__/
+**/*.pyc
+**/chroma_db_unified/
+.vscode/
+.qodo/
+Agent/test_data/
+data/
