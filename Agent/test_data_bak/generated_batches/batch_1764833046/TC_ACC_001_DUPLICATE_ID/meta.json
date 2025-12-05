@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_ACC_001_DUPLICATE_ID",
+  "description": "Verify rejection of account opening request when ID No already exists in the system (Rule: ACC_DUPLICATE_IDNO_CHECK).",
+  "source_rule_id": "ACC_DUPLICATE_IDNO_CHECK",
+  "source_rule_logic": "When processing an account opening request, the system must check if there is already an existing account with the same identification number (ID No). If such an account exists, the opening request is rejected and a failure confirmation record is generated with reason 'ID_EXISTS'. If no account exists with the same ID No, a new account is created and marked as NORMAL.",
+  "source_rule_file": "rules_1764829663_Duplicate_account_opening_check.json",
+  "expected_keyword": "ID_EXISTS",
+  "timestamp": 1764833763
+}

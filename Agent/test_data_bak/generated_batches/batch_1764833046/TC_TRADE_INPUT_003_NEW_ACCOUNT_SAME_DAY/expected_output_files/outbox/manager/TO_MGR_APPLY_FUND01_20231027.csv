@@ -1,0 +1,2 @@
+trans_id,fund_code,type,amount,shares,apply_time
+TXN_003,FUND01,PURCHASE,10000.00,,2023-10-27T10:00:00

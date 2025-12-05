@@ -1,0 +1,2 @@
+trans_id,fund_code,account_id,type,status,confirmed_shares,confirmed_nav,message
+TXN_004,FUND01,,PURCHASE,TA_REJECTED,0.00,0.00,MISSING_ACCOUNT_ID

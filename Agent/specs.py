@@ -164,3 +164,17 @@ OUTPUT_SPECS = {
   - `confirmed_shares`: 确认份额 (Decimal(18,2))
 """
 }
+
+# 4. 文件类型描述映射 (Metadata)
+# 供 Agent 在规划和选择文件时使用
+FILE_KEY_DESC_MAP = {
+    # Inputs
+    "DIST_ACC": "销售商账户申请文件",
+    "DIST_TRADE": "销售商交易申请文件",
+    "MGR_NAV": "管理人净值文件",
+    "MGR_CONFIRM": "管理人确认回执文件",
+    # Outputs
+    "TO_MGR_APPLY": "发送给管理人-交易申请汇总",
+    "TO_DIST_ACC_CONFIRM": "发送给销售商-账户业务确认",
+    "TO_DIST_CONFIRM": "发送给销售商-交易业务确认"
+}

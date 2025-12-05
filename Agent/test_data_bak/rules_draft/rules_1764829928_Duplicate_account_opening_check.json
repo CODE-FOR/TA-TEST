@@ -1,0 +1,12 @@
+[
+  {
+    "rule_id": "BR_ACC_OPEN_001",
+    "logic": "The system must identify a duplicate account by querying the data repository using the provided ID Number (idNo). The check is performed against existing accounts regardless of their status (Normal/Closed) as the lookup does not filter by status in the provided context.",
+    "condition": "When processing an Account Opening request (BizCode = '001')"
+  },
+  {
+    "rule_id": "BR_ACC_OPEN_002",
+    "logic": "If an account with the same ID Number already exists, the system must reject the opening request. The rejection record must contain: Status = '0' (Failure), Error Code = 'ID_EXISTS', and the Account ID of the *existing* account.",
+    "condition": "If 'existing' account object is not null (found by idNo)"
+  }
+]

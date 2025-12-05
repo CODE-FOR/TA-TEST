@@ -1,0 +1,17 @@
+[
+  {
+    "rule_id": "RDM_INS_001",
+    "logic": "For a REDEEM transaction, the system must verify that the investor has an existing holding record for the specified account and fund before proceeding.",
+    "condition": "If transaction.type == 'REDEEM' and holding record for (accountId, fundCode) is null → Reject transaction with reason 'INSUFFICIENT_SHARES'."
+  },
+  {
+    "rule_id": "RDM_INS_002",
+    "logic": "For a REDEEM transaction, the availableShares in the holding must be greater than or equal to the shares requested for redemption.",
+    "condition": "If transaction.type == 'REDEEM' and holding.availableShares < transaction.shares → Reject transaction with reason 'INSUFFICIENT_SHARES'."
+  },
+  {
+    "rule_id": "RDM_INS_003",
+    "logic": "If redemption is confirmed but no holding record exists at time of posting, log a critical error and do not update holdings.",
+    "condition": "In Confirm Phase, if transaction.type == 'REDEEM' and holding == null → log error 'Redeem confirmed but holding record missing' and skip posting."
+  }
+]

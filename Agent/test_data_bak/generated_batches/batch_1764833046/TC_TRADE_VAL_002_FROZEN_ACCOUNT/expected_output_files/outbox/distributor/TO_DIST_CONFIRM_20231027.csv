@@ -1,0 +1,2 @@
+trans_id,fund_code,account_id,type,status,confirmed_shares,confirmed_nav,message
+TXN_003,FUND01,TA10002,REDEEM,TA_REJECTED,0.00,0.00,ACCOUNT_STATUS_ABNORMAL

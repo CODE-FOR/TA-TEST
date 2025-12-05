@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_TRADE_INPUT_003_NEW_ACCOUNT_SAME_DAY",
+  "description": "Verify trade processing for a NEW account opened on the same day (T-day). The account_id is not in T-1 DB but is provided in the DIST_ACC file. The system must link the trade to the new account request.",
+  "source_rule_id": "BR_TRADE_INPUT_001",
+  "source_rule_logic": "The system processes 'Look-through' trading applications, which requires the 'account_id' to be present in the input to validate the investor's identity and status against the Account Map.",
+  "source_rule_file": "rules_1764832204_Look_through_Data_Gap_in_Manager_Export__TradeProc.json",
+  "expected_keyword": "TA_NEW_001",
+  "timestamp": 1764833379
+}

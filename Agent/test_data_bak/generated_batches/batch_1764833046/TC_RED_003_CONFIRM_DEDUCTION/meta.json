@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_RED_003_CONFIRM_DEDUCTION",
+  "description": "Verify BR-RDM-003: Successful redemption confirmation deducts shares from total and available balances. Scenario: User redeems 500 shares out of 1000. Manager confirms success. System must update holdings and generate confirmation files.",
+  "source_rule_id": "BR-RDM-003",
+  "source_rule_logic": "Upon successful confirmation of a redemption, the system must deduct the confirmed share amount from both 'totalShares' and 'availableShares' simultaneously to maintain the synchronization of the available balance.",
+  "source_rule_file": "rules_1764832312_Redemption_Boundary_Check__Available_vs__Total_Sha.json",
+  "expected_keyword": "CONFIRMED",
+  "timestamp": 1764833247
+}

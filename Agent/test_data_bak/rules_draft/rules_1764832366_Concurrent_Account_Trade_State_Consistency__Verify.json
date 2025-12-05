@@ -1,0 +1,17 @@
+[
+  {
+    "rule_id": "TRD-VAL-ACC-STATUS-001",
+    "logic": "During the core look-through validation logic of a trade application (Purchase or Redeem), the system must verify the current status of the investor's account. If the status is not explicitly 'NORMAL' (e.g., it is 'CLOSED' or 'FROZEN'), the trade check must fail, and the failure reason must be recorded as 'ACCOUNT_STATUS_ABNORMAL'.",
+    "condition": "In TradeProcessor.java: !\"NORMAL\".equals(account.getStatus())"
+  },
+  {
+    "rule_id": "TRD-VAL-ACC-EXIST-001",
+    "logic": "Before validating the account status, the system must verify the existence of the account ID provided in the transaction. If the account object is null (does not exist in the repository), the trade check must fail with the reason 'ACCOUNT_NOT_FOUND'.",
+    "condition": "In TradeProcessor.java: account == null"
+  },
+  {
+    "rule_id": "ACC-MOD-STATUS-UPDATE",
+    "logic": "When an account closure request (biz_code '002') is processed successfully, the account status must be immediately updated to 'CLOSED' in the data repository. This state change serves as the precondition for blocking subsequent trades (as per rule TRD-VAL-ACC-STATUS-001).",
+    "condition": "In AccountProcessor.java: bizCode equals '002' AND account exists -> acc.setStatus(\"CLOSED\")"
+  }
+]

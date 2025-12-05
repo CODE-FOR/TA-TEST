@@ -1,0 +1,3 @@
+request_no,biz_code,ta_account_id,status,message,confirm_time
+REQ_ACC_001,001,,0,ID_EXISTS,2023-10-27T10:00:00
+REQ_ACC_002,001,TA_NEW_001,1,SUCCESS,2023-10-27T10:00:00

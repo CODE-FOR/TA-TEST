@@ -1,13 +1,21 @@
-from typing import List, Optional
-from pydantic import BaseModel, Field
+from typing import List, Optional, Dict
+from langchain.agents import create_agent
+from langchain_core.output_parsers import JsonOutputParser
 from langchain_openai import ChatOpenAI
-from langchain.agents import AgentExecutor, create_tool_calling_agent
+from pydantic import BaseModel, Field
+# 切换为 Google Gemini 的官方集成
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
-from tools import lookup_business_rules, get_file_spec_definition, get_system_context
+# Robust import for AgentExecutor
+from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
+from langchain.agents.structured_output import ToolStrategy
+
+from tools import lookup_business_rules, get_system_context
 import config
 
-# --- 1. 定义结构化输出 (Schema Engineering) ---
-# 这是 MCP 思想的体现：定义明确的数据契约
+# ==========================================
+# 1. Pydantic Schema Definitions (Data Contracts)
+# ==========================================
 
 class FileArtifact(BaseModel):
     path: str = Field(description="Relative path, e.g., input/20231027/REQ.csv")
@@ -19,83 +27,165 @@ class TestCase(BaseModel):
     setup_state: dict = Field(description="T-1 DB State (Accounts, Holdings)")
     input_files: List[FileArtifact] = Field(description="List of input files for T-day")
     output_files: List[FileArtifact] = Field(description="List of EXPECTED output files")
-    expected_keyword: str = Field(description="Verification keyword")
+    expected_keyword: str = Field(description="Verification keyword for quick check")
 
 class TestCaseList(BaseModel):
     cases: List[TestCase]
 
-# --- 2. 真正的 Agent: BusinessRuleAnalyst ---
-# 这个 Agent 能够自主决定查什么资料
+class TestStrategy(BaseModel):
+    topics: List[str] = Field(description="List of 5-8 distinct, high-value test topics")
+
+class BusinessRule(BaseModel):
+    rule_id: str = Field(description="Unique Rule ID, e.g., RULE_001")
+    logic: str = Field(description="Human readable description of the business logic")
+    condition: str = Field(description="Technical condition or constraint")
+
+class BusinessRuleList(BaseModel):
+    rules: List[BusinessRule]
+
+# ==========================================
+# 2. Agent Definitions (Provider Strategy Edition)
+# ==========================================
+
+class TestStrategyPlannerAgent:
+    """[Phase 0] 战略规划师: 使用 Provider Strategy (Native Structured Output)"""
+    def __init__(self, model_name: str = "gemini-1.5-pro"):
+        # 使用较高的 Temperature 以激发发散性思维
+        # self.llm = ChatGoogleGenerativeAI(model=model_name, temperature=0.7)
+        self.llm = ChatOpenAI(model=model_name, temperature=0.7)
+    def plan(self, system_context: str, file_interfaces: str) -> List[str]:
+        # Provider Strategy: 直接绑定 Schema，由 Gemini 原生强制输出结构
+        structured_llm = self.llm.with_structured_output(TestStrategy)
+        
+        template = """You are a Principal QA Architect for a Mission-Critical Financial System (Transfer Agent).
+        Your goal is to design a comprehensive **Test Strategy** (List of Topics) to uncover hidden bugs.
+
+        ### 1. SYSTEM CONTEXT
+        {system_context}
+
+        ### 2. FILE INTERFACES
+        The system handles these files: {file_types}
+
+        ### 3. BRAINSTORMING METHODOLOGY
+        Do not just test happy paths. You must apply:
+        - **Boundary Value Analysis**: Test max/min amounts, zero values, extreme dates.
+        - **Equivalence Partitioning**: Valid vs Invalid status, Supported vs Unsupported types.
+        - **Error Guessing**: Duplicate IDs, Missing fields, Logic conflicts (Redeem > Balance).
+        - **Process Interaction**: Open account then trade immediately (T0), Trade on non-existent account.
+
+        ### 4. OUTPUT REQUIREMENT
+        Generate a list of 5-8 distinct, high-value **Test Topics** (Strings).
+        """
+        
+        prompt = ChatPromptTemplate.from_template(template)
+        chain = prompt | structured_llm
+        
+        try:
+            res = chain.invoke({
+                "system_context": system_context,
+                "file_types": file_interfaces
+            })
+            # 直接返回 Pydantic 对象解析后的数据
+            return res.topics
+        except Exception as e:
+            print(f"⚠️ Strategy Planning failed: {e}")
+            return ["Redemption validation logic", "Account status checks"]
 
 class BusinessRuleAnalystAgent:
+    """[Phase 1] 规则分析师: Tool Calling Loop + Provider Strategy Extraction"""
     def __init__(self):
+        # self.llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0)
         self.llm = ChatOpenAI(model=config.OPENAI_MODEL, temperature=0)
         self.tools = [lookup_business_rules, get_system_context]
         
-        # 标准 LangChain Agent 构造
+        # 1. 调研阶段：使用 Tool Calling Agent (ReAct) 进行自由探索
         prompt = ChatPromptTemplate.from_messages([
-            ("system", "You are a Senior QA Architect. Analyze the topic to extract business rules."),
+            ("system", "You are a Senior QA Architect. Investigate the topic thoroughly using your tools."),
             ("placeholder", "{chat_history}"),
             ("human", "{input}"),
             ("placeholder", "{agent_scratchpad}"),
         ])
         
         agent = create_tool_calling_agent(self.llm, self.tools, prompt)
-        self.executor = AgentExecutor(agent=agent, tools=self.tools, verbose=True)
+        self.research_executor = AgentExecutor(agent=agent, tools=self.tools, verbose=False)
+        
+        # 2. 提取阶段：使用 Provider Strategy 进行结构化提取
+        self.extractor_llm = self.llm.with_structured_output(BusinessRuleList)
 
-    def analyze(self, topic: str):
-        # 让 Agent 自己去思考怎么查资料
-        response = self.executor.invoke({
-            "input": f"Analyze the topic '{topic}'. Extract business rules. "
-                     f"First check system context, then search for specific rules. "
-                     f"Output the rules in a clean JSON format."
-        })
-        # 注意：这里返回的是 Agent 的最终回复字符串，如果需要结构化，
-        # 可以再接一个 StructuredOutputParser，或者让 Agent 调用一个 save_rules 的 tool
-        return response["output"]
+    def analyze(self, topic: str) -> List[dict]:
+        # Step 1: Research (Unstructured Thinking)
+        try:
+            research_res = self.research_executor.invoke({
+                "input": f"Research all business rules and constraints for: '{topic}'. "
+                         f"Check Documentation and Code. Summarize findings."
+            })
+            findings = research_res['output']
+        except Exception as e:
+            print(f"⚠️ Research failed: {e}")
+            findings = f"Analyze logic for {topic} based on general context."
 
-# --- 3. 结构化生成器: TestCaseGenerator ---
-# 这里使用 with_structured_output，这是目前最稳定的生成 JSON 的方式
-
-class TestCaseGeneratorAgent:
-    def __init__(self):
-        self.llm = ChatOpenAI(model=config.OPENAI_MODEL, temperature=0)
-
-    def generate(self, rule_json: str) -> List[dict]:
-        # 绑定 Pydantic 模型，强制 LLM 输出符合 Schema 的数据
-        structured_llm = self.llm.with_structured_output(TestCaseList)
+        # Step 2: Extraction (Native Structured Output)
+        extract_prompt = ChatPromptTemplate.from_template("""
+        Based on the following research findings, extract formal Business Rules.
         
-        # 可以在 Prompt 中告知 LLM 可以调用 tools 来获取文件规范，
-        # 或者直接把规范注入到 Prompt Context 中（如果规范较短）。
-        # 为了展示 Tool Calling，我们这里也可以 bind tools，但 structured_output 互斥。
-        # 更好的做法是 RAG 取回规范，放在 Context 里，然后强制结构化输出。
+        ### FINDINGS
+        {findings}
         
-        prompt = ChatPromptTemplate.from_template("""
-        You are an SDET. Generate test cases for the following rule.
-        
-        Rule: {rule}
-        
-        Reference Specs:
-        {specs}
-        
-        Generate strict JSON.
+        Extract a list of rules corresponding to the findings.
         """)
         
-        # 简单的做法：预先取回 Spec (或者让上游传进来)
-        # 这里为了演示方便，我们假设 specs 已经通过某种方式获取了，
-        # 或者我们可以写一个 Chain：先查 Spec，再生成。
+        chain = extract_prompt | self.extractor_llm
         
-        # 为了演示 "Tool Calling 思想"，我们这里做一个 Hybrid：
-        # 实际工程中，通常会在 Chain 的前序步骤准备好 Context。
+        try:
+            res = chain.invoke({"findings": findings})
+            return [rule.model_dump() for rule in res.rules]
+        except Exception as e:
+            print(f"⚠️ Rule Extraction failed: {e}")
+            return []
+
+class TestCaseGeneratorAgent:
+    """[Phase 2] 用例生成器: 使用 Parser 手动解析"""
+    def __init__(self, model_name: str = "gemini-3-pro"):
+        self.llm = ChatGoogleGenerativeAI(model=model_name, temperature=0)
+
+    def generate(self, rule_json: str, interface_context: str = "", system_context: str = "") -> List[dict]:
+        # 1. 定义 Parser
+        parser = JsonOutputParser(pydantic_object=TestCaseList)
         
-        import specs as static_specs # 暂时引用静态，实际应动态获取
+        prompt = ChatPromptTemplate.from_template("""
+        You are an expert SDET. Generate comprehensive test cases for the rule below.
+
+        ### 1. TARGET RULE
+        {rule}
+
+        ### 2. SYSTEM KNOWLEDGE
+        {system_context}
+
+        ### 3. INTERFACE SPECIFICATIONS
+        Strictly follow these definitions for file formats (CSV Headers, naming conventions):
+        {interface_context}
+
+        ### 4. TASK
+        Generate valid JSON test cases. Ensure:
+        - `input_files` match the Spec.
+        - `setup_state` supports the scenario (Dependency Chain).
+        - `output_files` represent the expected system response.
         
-        chain = prompt | structured_llm
+        {format_instructions}
+        """,
+        partial_variables={"format_instructions": parser.get_format_instructions()}
+        )
         
-        result = chain.invoke({
-            "rule": rule_json,
-            "specs": str(static_specs.FILE_SPECS) # 简单粗暴注入，工业级应使用 RAG
-        })
+        chain = prompt | self.llm | parser
         
-        # Pydantic 转 Dict
-        return [c.model_dump() for c in result.cases]
+        try:
+            res = chain.invoke({
+                "rule": rule_json,
+                "interface_context": interface_context,
+                "system_context": system_context
+            })
+            # res 是 {'cases': [...]}
+            return res.get("cases", [])
+        except Exception as e:
+            print(f"⚠️ Case Gen failed: {e}")
+            return []

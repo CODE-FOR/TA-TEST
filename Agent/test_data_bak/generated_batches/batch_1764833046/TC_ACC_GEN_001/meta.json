@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_ACC_GEN_001",
+  "description": "Verify Account ID generation strategy: 'TA' + Math.abs(idNo.hashCode()) for a new account opening request.",
+  "source_rule_id": "ACC_ID_GENERATION_STRATEGY",
+  "source_rule_logic": "When opening a new account, the system generates the Account ID by concatenating the prefix 'TA' with the absolute value of the hash code of the customer's ID number (`String newAccId = \"TA\" + Math.abs(idNo.hashCode())`). This generation method is used as the primary key for the Account Map.",
+  "source_rule_file": "rules_1764832189_Account_ID_Generation_Collision_Risk__Code_uses__i.json",
+  "expected_keyword": "TA2064662334",
+  "timestamp": 1764833799
+}

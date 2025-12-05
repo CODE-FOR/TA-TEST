@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_ACC_OPEN_002_DUPLICATE_ID",
+  "description": "Verify rejection when opening an account with an ID Number that already exists in the T-1 Setup State (Rule BR_ACC_OPEN_002). The rejection must return the existing Account ID.",
+  "source_rule_id": "BR_ACC_OPEN_002",
+  "source_rule_logic": "If an account with the same ID Number already exists, the system must reject the opening request. The rejection record must contain: Status = '0' (Failure), Error Code = 'ID_EXISTS', and the Account ID of the *existing* account.",
+  "source_rule_file": "rules_1764829928_Duplicate_account_opening_check.json",
+  "expected_keyword": "ID_EXISTS",
+  "timestamp": 1764833709
+}

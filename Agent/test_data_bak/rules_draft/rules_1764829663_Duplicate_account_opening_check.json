@@ -1,0 +1,7 @@
+[
+  {
+    "rule_id": "ACC_DUPLICATE_IDNO_CHECK",
+    "logic": "When processing an account opening request, the system must check if there is already an existing account with the same identification number (ID No). If such an account exists, the opening request is rejected and a failure confirmation record is generated with reason 'ID_EXISTS'. If no account exists with the same ID No, a new account is created and marked as NORMAL.",
+    "condition": "BizCode = '001' (account opening) AND dataRepo.findByIdNo(idNo) != null"
+  }
+]

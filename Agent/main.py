@@ -16,57 +16,30 @@ import config
 import specs
 from infrastructure import MockDBManager
 from rag_service import UnifiedRAGService
-# 引用新重构的 Agents (支持 Tool Calling 和 Pydantic Schema)
-from agents import BusinessRuleAnalystAgent, TestCaseGeneratorAgent
+from agents import BusinessRuleAnalystAgent, TestCaseGeneratorAgent, TestStrategyPlannerAgent
 
 load_dotenv()
 logger = logging.getLogger("TA_Agent_Orchestrator")
 
 # ==========================================
-# Phase 0: 战略规划组件
+# Global Constants & Configuration
 # ==========================================
-class TestStrategyPlanner:
-    """
-    [Phase 0] 负责生成测试战役的宏观主题。
-    这是一个轻量级的 Chain，不需要复杂的 Tool Calling，
-    只需基于系统上下文 (System Context) 进行发散性思考。
-    """
-    def __init__(self, llm_model):
-        self.llm = ChatOpenAI(model=llm_model, temperature=0.7) # 高温以激发灵感
 
-    def plan_test_campaign(self) -> List[str]:
-        logger.info("🧠 Brainstorming test scenarios based on System Specs...")
-        
-        template = """You are a Principal QA Architect for a Mission-Critical Financial System (Transfer Agent).
-        Your goal is to design a comprehensive **Test Strategy** (List of Topics).
+# 建立 Key 到中文描述的映射，用于提示词增强
+# 这样可以保持 specs.py 的纯净，同时给 Agent 提供语义信息
+FILE_KEY_DESC_MAP = {
+    "DIST_ACC": "销售商账户申请文件",
+    "DIST_TRADE": "销售商交易申请文件",
+    "MGR_NAV": "管理人净值文件",
+    "MGR_CONFIRM": "管理人确认回执文件"
+}
 
-        ### 1. SYSTEM CONTEXT
-        {system_context}
-
-        ### 2. FILE INTERFACES
-        The system handles: DIST_ACC, DIST_TRADE, MGR_NAV, MGR_CONFIRM.
-
-        ### 3. STRATEGY GENERATION
-        Generate 5-8 distinct, high-value **Test Topics**.
-        Prioritize:
-        - **Gap Analysis**: Discrepancies between Docs and potential Code reality.
-        - **Boundary Attacks**: Max/min values, zero amounts.
-        - **Process Interaction**: Account opening + Trading in same batch.
-        
-        Output strictly a JSON list of strings.
-        Example: ["Redemption with insufficient balance", "Duplicate Account Opening"]
-        """
-        
-        prompt = ChatPromptTemplate.from_template(template)
-        chain = prompt | self.llm | JsonOutputParser()
-        
-        try:
-            topics = chain.invoke({"system_context": specs.SYSTEM_CONTEXT})
-            logger.info(f"🧠 Planner generated {len(topics)} topics.")
-            return topics
-        except Exception as e:
-            logger.error(f"Failed to plan strategy: {e}")
-            return ["Redemption validation logic", "Account status checks"]
+# 动态生成 SUPPORTED_FILE_TYPES，确保与 specs.py 严格同步
+# 格式示例: ["DIST_TRADE - 销售商交易申请文件", ...]
+SUPPORTED_FILE_TYPES = [
+    f"{key} - {FILE_KEY_DESC_MAP.get(key, '未定义描述文件')}"
+    for key in specs.FILE_SPECS.keys()
+]
 
 # ==========================================
 # Main Orchestrator
@@ -77,16 +50,16 @@ class Orchestrator:
         # RAG 服务仅用于初始化数据入库，具体的查询由 Analyst Agent 的 Tool 接管
         self.rag_service = UnifiedRAGService() 
         
-        # 初始化 Agents
-        self.planner = TestStrategyPlanner(config.OPENAI_MODEL)
+        # 初始化 Agents (全部来自 agents.py)
+        self.planner = TestStrategyPlannerAgent(config.OPENAI_MODEL)
         self.analyst = BusinessRuleAnalystAgent()
-        self.generator = TestCaseGeneratorAgent()
+        self.generator = TestCaseGeneratorAgent(config.OPENAI_MODEL)
 
     def initialize(self, reindex: bool = False):
         logger.info("Initializing Orchestrator...")
         if reindex:
             logger.info("Triggering Knowledge Base Ingestion...")
-            self.rag_service.ingest_knowledge_base()
+            self.rag.ingest_knowledge_base()
         
         # 确保目录存在
         os.makedirs(config.RULES_DIR, exist_ok=True)
@@ -96,7 +69,15 @@ class Orchestrator:
     def phase_0_plan(self):
         """阶段零：自动规划测试主题"""
         logger.info("🚀 === PHASE 0: STRATEGY PLANNING ===")
-        topics = self.planner.plan_test_campaign()
+        
+        # 直接使用全局变量，无需内部 import
+        file_types_str = ", ".join([t.split(' - ')[0] for t in SUPPORTED_FILE_TYPES])
+        
+        topics = self.planner.plan(
+            system_context=specs.SYSTEM_CONTEXT,
+            file_interfaces=file_types_str
+        )
+        
         for i, t in enumerate(topics):
             logger.info(f"   {i+1}. {t}")
         return topics
@@ -169,9 +150,24 @@ class Orchestrator:
                 rule_desc = rule.get('logic', str(rule)[:50])
                 logger.info(f"⚡ Generating Cases for: {rule_desc}...")
                 
+                # 1. 确定输入文件 (这里为了简化，使用简单的启发式或再次调用 LLM，
+                # 但为了性能，我们可以在 Generator Agent 内部处理，或者由 Analyst 在 Phase 1 已经确定)
+                # 此处我们将所有相关 Context 喂给 Generator
+                
+                # 确定相关的文件规范
+                # 简单策略：把所有 Input 和 Output 规范都塞进去，依靠 LLM 的注意力机制
+                full_spec_context = specs.GENERAL_SPECS + "\n"
+                for key, content in specs.FILE_SPECS.items():
+                    full_spec_context += f"\n--- INPUT SPEC: {key} ---\n{content}\n"
+                for key, content in specs.OUTPUT_SPECS.items():
+                    full_spec_context += f"\n--- OUTPUT SPEC: {key} ---\n{content}\n"
+
                 # 调用 Pydantic 强类型的 Generator Agent
-                # 这里将 rule 对象转为字符串传入
-                cases = self.generator.generate(json.dumps(rule, ensure_ascii=False))
+                cases = self.generator.generate(
+                    rule_json=json.dumps(rule, ensure_ascii=False),
+                    interface_context=full_spec_context,
+                    system_context=specs.SYSTEM_CONTEXT
+                )
                 
                 for case in cases:
                     self._save_case_artifact(case, rule, r_file, batch_dir)
@@ -180,7 +176,6 @@ class Orchestrator:
 
     def _save_case_artifact(self, case_dict, source_rule, source_file, batch_dir):
         """
-        [恢复的高质量保存逻辑]
         将单个测试用例的所有要素（DB、Input、Output）保存为独立的文件结构。
         """
         case_id = case_dict.get('case_id', 'UNKNOWN_CASE')
@@ -208,7 +203,6 @@ class Orchestrator:
         os.makedirs(snapshot_dir, exist_ok=True)
         setup_state = case_dict.get('setup_state', {})
         
-        # 拆分 Accounts 和 Holdings
         if 'accounts' in setup_state:
             with open(os.path.join(snapshot_dir, "Accounts.json"), 'w', encoding='utf-8') as f:
                 json.dump(setup_state['accounts'], f, indent=2, ensure_ascii=False)
@@ -217,7 +211,6 @@ class Orchestrator:
                 json.dump(setup_state['holdings'], f, indent=2, ensure_ascii=False)
 
         # 3. 保存输入文件 (input_files)
-        # 注意：Agent 现在返回的是 List[FileArtifact]，需要适配
         input_files_root = os.path.join(case_dir, "input_files")
         self._save_files(case_dict.get('input_files', []), input_files_root)
 
@@ -231,12 +224,10 @@ class Orchestrator:
             return
 
         for file_obj in file_list:
-            # Pydantic dump 后的字典 key 为 'path', 'content'
             file_path = file_obj.get('path')
             file_content = file_obj.get('content')
             
             if file_path and file_content:
-                # 路径清洗
                 clean_path = file_path.lstrip("/").lstrip("\\")
                 if clean_path.startswith("./"): clean_path = clean_path[2:]
                 
@@ -249,12 +240,10 @@ class Orchestrator:
     def _extract_json_from_text(self, text):
         """辅助方法：从 Agent 的自然语言回复中提取 JSON List"""
         try:
-            # 尝试直接解析
             return json.loads(text)
         except json.JSONDecodeError:
             pass
         
-        # 尝试正则提取 ```json ... ``` 块
         match = re.search(r"```json(.*?)```", text, re.DOTALL)
         if match:
             try:
@@ -262,14 +251,12 @@ class Orchestrator:
             except json.JSONDecodeError:
                 pass
         
-        # 尝试提取 [ ... ]
         match = re.search(r"(\[.*\])", text, re.DOTALL)
         if match:
             try:
                 return json.loads(match.group(1))
             except:
                 pass
-                
         return None
 
 if __name__ == "__main__":

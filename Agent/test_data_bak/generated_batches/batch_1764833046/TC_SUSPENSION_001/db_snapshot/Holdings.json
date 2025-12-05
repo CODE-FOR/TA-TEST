@@ -1,0 +1,14 @@
+[
+  {
+    "accountId": "TA10001",
+    "fundCode": "FUND01",
+    "totalShares": 5000.0,
+    "availableShares": 5000.0
+  },
+  {
+    "accountId": "TA10002",
+    "fundCode": "FUND01",
+    "totalShares": 1000.0,
+    "availableShares": 1000.0
+  }
+]

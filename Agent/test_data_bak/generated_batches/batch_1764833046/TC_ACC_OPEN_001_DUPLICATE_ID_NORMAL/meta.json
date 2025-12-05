@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_ACC_OPEN_001_DUPLICATE_ID_NORMAL",
+  "description": "Verify that an account opening request is rejected when the ID Number already exists in a NORMAL state account.",
+  "source_rule_id": "BR_ACC_OPEN_001",
+  "source_rule_logic": "The system must identify a duplicate account by querying the data repository using the provided ID Number (idNo). The check is performed against existing accounts regardless of their status (Normal/Closed) as the lookup does not filter by status in the provided context.",
+  "source_rule_file": "rules_1764829928_Duplicate_account_opening_check.json",
+  "expected_keyword": "ID_EXISTS",
+  "timestamp": 1764833539
+}

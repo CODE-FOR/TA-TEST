@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_SUSPENSION_NAV_MISSING_001",
+  "description": "Verify that trade applications are rejected (TA_REJECTED) when the Fund Manager fails to send the required NAV file for the specific fund (Rule BR_TRADE_SUSPENSION_002).",
+  "source_rule_id": "BR_TRADE_SUSPENSION_002",
+  "source_rule_logic": "The Fund Manager is required to send the daily Net Asset Value (NAV) file before the system initiates the processing of any trade applications for the corresponding fund.",
+  "source_rule_file": "rules_1764832281_Trade_Suspension_Mechanism__Verify_trades_remain_i.json",
+  "expected_keyword": "NAV_NOT_RECEIVED",
+  "timestamp": 1764833482
+}

@@ -1,0 +1,7 @@
+[
+  {
+    "rule_id": "BR-ACC-REG-001",
+    "logic": "When processing an Account Opening request (bizCode='001'), the system must validate the provided 'idNo' against the existing Account Repository (initialized via T-1 Setup Data/accounts.json). If the 'idNo' already exists, the system must reject the registration, return the existing 'accountId', set the confirmation status to '0' (Failure), and assign the error code 'ID_EXISTS'.",
+    "condition": "Request bizCode is '001' AND 'idNo' matches an existing record in dataRepo.findByIdNo(idNo)"
+  }
+]

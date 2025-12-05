@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_BR_REDEEM_VAL_001",
+  "description": "Verify redemption rejection when Request Shares > Available Shares (even if < Total Shares). This ensures validation targets the 'availableShares' field.",
+  "source_rule_id": "BR_REDEEM_VALIDATION_FIELD",
+  "source_rule_logic": "Redemption validation must be performed specifically against the 'availableShares' (Available Shares) field of the investor's holding, not the total shares.",
+  "source_rule_file": "rules_1764829874_Redeem_insufficient_shares_check.json",
+  "expected_keyword": "INSUFFICIENT_SHARES",
+  "timestamp": 1764833083
+}

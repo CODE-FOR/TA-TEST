@@ -1,0 +1,2 @@
+trans_id,fund_code,type,amount,shares,apply_time
+REQ_RED_001,FUND01,REDEEM,,500.00,2023-10-27T10:00:00

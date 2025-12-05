@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_SUSPENSION_003_NAV_DEPENDENCY",
+  "description": "Verify that trade processing for FUND01 is suspended/blocked until the NAV file is received. This test simulates the 'Happy Path' where the NAV arrives, allowing the trade to proceed to the Apply Phase output. (Note: In a real async system, missing NAV would result in no output or a pending state; here we simulate the successful flow enabled by the presence of NAV).",
+  "source_rule_id": "BR_TRADE_SUSPENSION_003",
+  "source_rule_logic": "Trade processing tasks must implicitly depend on the successful reception of the NAV file for the related fund code; if the NAV task is not complete, the trade task waits.",
+  "source_rule_file": "rules_1764832281_Trade_Suspension_Mechanism__Verify_trades_remain_i.json",
+  "expected_keyword": "TRX_001",
+  "timestamp": 1764833506
+}

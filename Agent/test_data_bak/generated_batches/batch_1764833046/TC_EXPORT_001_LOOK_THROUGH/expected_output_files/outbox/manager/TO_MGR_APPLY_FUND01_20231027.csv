@@ -1,0 +1,3 @@
+trans_id,fund_code,account_id,type,amount,shares,apply_time
+REQ_001,FUND01,TA88801,PURCHASE,10000.00,,2023-10-27T10:00:00
+REQ_002,FUND01,TA88801,REDEEM,,2000.00,2023-10-27T10:00:00

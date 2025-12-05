@@ -1,0 +1,8 @@
+[
+  {
+    "accountId": "TA_ACC_001",
+    "fundCode": "FUND01",
+    "totalShares": 1000.0,
+    "availableShares": 400.0
+  }
+]

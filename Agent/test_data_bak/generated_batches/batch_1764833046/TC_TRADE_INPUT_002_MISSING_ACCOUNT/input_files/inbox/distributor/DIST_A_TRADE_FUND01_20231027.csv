@@ -1,0 +1,2 @@
+trans_id,fund_code,type,amount_or_shares,account_id
+TXN_002,FUND01,PURCHASE,1000.00,TA99999

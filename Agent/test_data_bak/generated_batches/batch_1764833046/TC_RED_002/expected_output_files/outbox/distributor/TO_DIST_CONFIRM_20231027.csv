@@ -1,0 +1,2 @@
+trans_id,fund_code,account_id,type,status,confirmed_shares,confirmed_nav,message
+TXN_RED_001,FUND01,TA888001,REDEEM,TA_REJECTED,0.00,0.00,INSUFFICIENT_SHARES

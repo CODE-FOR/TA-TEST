@@ -1,0 +1,2 @@
+trans_id,fund_code,type,amount_or_shares,account_id
+TX_RED_001,FUND01,REDEEM,600.00,TA_ACC_999

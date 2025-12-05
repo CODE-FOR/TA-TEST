@@ -1,0 +1,17 @@
+[
+  {
+    "rule_id": "BR-RDM-001",
+    "logic": "Redemption validation must be performed specifically against the 'availableShares' field in the holdings record, not the 'totalShares'. This ensures that frozen or locked shares (which cause Total > Available) cannot be redeemed.",
+    "condition": "Transaction Type == 'REDEEM' AND Holding Record Exists"
+  },
+  {
+    "rule_id": "BR-RDM-002",
+    "logic": "If the requested redemption shares exceed the 'availableShares', the transaction must be immediately rejected by the TA system with the status 'TA_REJECTED' and message 'INSUFFICIENT_SHARES', even if 'totalShares' is sufficient to cover the request.",
+    "condition": "Transaction.shares > Holding.availableShares"
+  },
+  {
+    "rule_id": "BR-RDM-003",
+    "logic": "Upon successful confirmation of a redemption, the system must deduct the confirmed share amount from both 'totalShares' and 'availableShares' simultaneously to maintain the synchronization of the available balance.",
+    "condition": "Transaction Type == 'REDEEM' AND Transaction Status == 'CONFIRMED'"
+  }
+]

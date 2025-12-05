@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_RED_001_FROZEN_SHARES",
+  "description": "Verify redemption fails when requesting more than available shares, even if total shares are sufficient (Simulating Frozen/Locked shares).",
+  "source_rule_id": "BR-RDM-001",
+  "source_rule_logic": "Redemption validation must be performed specifically against the 'availableShares' field in the holdings record, not the 'totalShares'. This ensures that frozen or locked shares (which cause Total > Available) cannot be redeemed.",
+  "source_rule_file": "rules_1764832312_Redemption_Boundary_Check__Available_vs__Total_Sha.json",
+  "expected_keyword": "INSUFFICIENT_SHARES",
+  "timestamp": 1764833161
+}

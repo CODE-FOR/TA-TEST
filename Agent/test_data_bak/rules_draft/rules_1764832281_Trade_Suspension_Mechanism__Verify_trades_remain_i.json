@@ -1,0 +1,17 @@
+[
+  {
+    "rule_id": "BR_TRADE_SUSPENSION_001",
+    "logic": "All trade applications (Purchase/Redeem) must remain in a 'Pending' (or 'Suspended') state and cannot be processed if the Net Asset Value (NAV) market data has not been received from the Fund Manager.",
+    "condition": "MGR_NAV file is missing (not arrived) for the specific Fund Code on T-day"
+  },
+  {
+    "rule_id": "BR_TRADE_SUSPENSION_002",
+    "logic": "The Fund Manager is required to send the daily Net Asset Value (NAV) file before the system initiates the processing of any trade applications for the corresponding fund.",
+    "condition": "Prior to the execution of the Trade Processing phase (Apply Phase)"
+  },
+  {
+    "rule_id": "BR_TRADE_SUSPENSION_003",
+    "logic": "Trade processing tasks must implicitly depend on the successful reception of the NAV file for the related fund code; if the NAV task is not complete, the trade task waits.",
+    "condition": "Task is 'DIST_TRADE' and 'relatedFundCode' matches the pending 'MGR_NAV' task"
+  }
+]

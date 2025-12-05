@@ -1,0 +1,17 @@
+[
+  {
+    "rule_id": "BR-SEQ-001",
+    "logic": "Processing Priority: Account business operations (Opening/Closing) must be processed before Trade business operations (Purchase/Redeem) within the same daily batch cycle.",
+    "condition": "When both Account Application files (DIST_ACC) and Trade Application files are received from the Distributor in the 'Apply Phase'."
+  },
+  {
+    "rule_id": "BR-SEQ-002",
+    "logic": "Same-Day Trading Availability: Accounts newly opened in the current batch must be immediately valid and available for trade declarations submitted in the same batch.",
+    "condition": "A trade record references an `account_id` that was successfully created (BizCode '001') in the preceding Account file processing of the same day."
+  },
+  {
+    "rule_id": "BR-SEQ-003",
+    "logic": "Trade Validation Dependency: The Trade Processor must query the `TaDataRepository` for account existence. If the account was not found (neither existing previously nor created in the current batch's priority processing), the trade is rejected with `ACCOUNT_NOT_FOUND`.",
+    "condition": "Trade processing logic executes `dataRepo.getAccountMap().get(accountId)` and returns null."
+  }
+]

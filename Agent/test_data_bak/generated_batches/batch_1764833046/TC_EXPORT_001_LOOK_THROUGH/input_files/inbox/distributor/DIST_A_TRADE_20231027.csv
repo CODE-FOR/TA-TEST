@@ -1,0 +1,3 @@
+request_no,distributor_id,fund_code,account_id,type,amount,shares
+REQ_001,DIST_A,FUND01,TA88801,PURCHASE,10000.00,
+REQ_002,DIST_A,FUND01,TA88801,REDEEM,,2000.00

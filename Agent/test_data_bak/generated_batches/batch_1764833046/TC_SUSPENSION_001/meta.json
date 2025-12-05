@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_SUSPENSION_001",
+  "description": "Verify that Purchase and Redeem trades are NOT processed (no output to Manager) when the NAV file is missing for the specific Fund Code on T-day.",
+  "source_rule_id": "BR_TRADE_SUSPENSION_001",
+  "source_rule_logic": "All trade applications (Purchase/Redeem) must remain in a 'Pending' (or 'Suspended') state and cannot be processed if the Net Asset Value (NAV) market data has not been received from the Fund Manager.",
+  "source_rule_file": "rules_1764832281_Trade_Suspension_Mechanism__Verify_trades_remain_i.json",
+  "expected_keyword": "NAV_MISSING_SUSPENDED",
+  "timestamp": 1764833448
+}

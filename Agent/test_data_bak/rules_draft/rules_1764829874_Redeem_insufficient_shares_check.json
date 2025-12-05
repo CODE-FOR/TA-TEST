@@ -1,0 +1,12 @@
+[
+  {
+    "rule_id": "BR_REDEEM_VALIDATION_FIELD",
+    "logic": "Redemption validation must be performed specifically against the 'availableShares' (Available Shares) field of the investor's holding, not the total shares.",
+    "condition": "Transaction Type == 'REDEEM' (Context: ../doc/接口文件规范.md - 'availableShares: (赎回校验时使用此字段)')"
+  },
+  {
+    "rule_id": "BR_REDEEM_REJECTION_MSG",
+    "logic": "If the requested redemption shares exceed the available shares, the transaction must be marked with a rejected status (e.g., TA_REJECTED) and the error message must be set to 'INSUFFICIENT_SHARES'.",
+    "condition": "Requested Shares > Available Shares (Context: ../doc/TA系统业务运作指引.md - Example table)"
+  }
+]

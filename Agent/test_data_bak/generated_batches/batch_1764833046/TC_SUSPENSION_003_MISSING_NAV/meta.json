@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_SUSPENSION_003_MISSING_NAV",
+  "description": "Verify that trade processing for FUND02 is effectively halted/does not produce an Apply Phase output file because the corresponding NAV file is missing from the input, despite a valid trade request existing.",
+  "source_rule_id": "BR_TRADE_SUSPENSION_003",
+  "source_rule_logic": "Trade processing tasks must implicitly depend on the successful reception of the NAV file for the related fund code; if the NAV task is not complete, the trade task waits.",
+  "source_rule_file": "rules_1764832281_Trade_Suspension_Mechanism__Verify_trades_remain_i.json",
+  "expected_keyword": "NO_OUTPUT",
+  "timestamp": 1764833506
+}

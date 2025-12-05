@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_TRADE_INPUT_004_EMPTY_ACCOUNT_FIELD",
+  "description": "Verify validation when the account_id field is physically empty in the CSV. This violates the mandatory field requirement.",
+  "source_rule_id": "BR_TRADE_INPUT_001",
+  "source_rule_logic": "The system processes 'Look-through' trading applications, which requires the 'account_id' to be present in the input to validate the investor's identity and status against the Account Map.",
+  "source_rule_file": "rules_1764832204_Look_through_Data_Gap_in_Manager_Export__TradeProc.json",
+  "expected_keyword": "MISSING_ACCOUNT_ID",
+  "timestamp": 1764833379
+}

@@ -1,0 +1,9 @@
+[
+  {
+    "distributorId": "DIST_A",
+    "accountId": "TA_ACC_001",
+    "idNo": "ID_1001",
+    "name": "FrozenUser",
+    "status": "NORMAL"
+  }
+]

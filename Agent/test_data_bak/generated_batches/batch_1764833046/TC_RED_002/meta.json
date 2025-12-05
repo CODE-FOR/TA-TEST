@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_RED_002",
+  "description": "Verify rejection when Redemption Shares > Available Shares (Rule BR-RDM-002). Scenario: User has 1000 total shares but only 500 available. User attempts to redeem 800.",
+  "source_rule_id": "BR-RDM-002",
+  "source_rule_logic": "If the requested redemption shares exceed the 'availableShares', the transaction must be immediately rejected by the TA system with the status 'TA_REJECTED' and message 'INSUFFICIENT_SHARES', even if 'totalShares' is sufficient to cover the request.",
+  "source_rule_file": "rules_1764832312_Redemption_Boundary_Check__Available_vs__Total_Sha.json",
+  "expected_keyword": "INSUFFICIENT_SHARES",
+  "timestamp": 1764833198
+}

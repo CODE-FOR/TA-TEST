@@ -1,0 +1,2 @@
+request_no,biz_code,ta_account_id,status,message,confirm_time
+REQ_OPEN_DUP_01,001,TA_EXISTING_999,0,ID_EXISTS,2023-10-27 10:00:00

@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_TRADE_VAL_003_NEW_ACCOUNT_SAME_DAY",
+  "description": "Verify that a trade is accepted for a new account created in the same batch (T-day Input), validating the Look-through logic.",
+  "source_rule_id": "BR_TRADE_VALIDATION_001",
+  "source_rule_logic": "A valid transaction requires a valid 'account_id' that exists in the system and has a status of 'NORMAL'. This validates that the trade is associated with a specific, known investor (Look-through logic).",
+  "source_rule_file": "rules_1764832204_Look_through_Data_Gap_in_Manager_Export__TradeProc.json",
+  "expected_keyword": "SUCCESS",
+  "timestamp": 1764833417
+}

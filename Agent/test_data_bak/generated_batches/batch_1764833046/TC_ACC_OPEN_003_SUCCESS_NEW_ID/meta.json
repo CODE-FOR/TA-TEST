@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_ACC_OPEN_003_SUCCESS_NEW_ID",
+  "description": "Verify that an account opening request is successful when the ID Number is unique and does not exist in the repository.",
+  "source_rule_id": "BR_ACC_OPEN_001",
+  "source_rule_logic": "The system must identify a duplicate account by querying the data repository using the provided ID Number (idNo). The check is performed against existing accounts regardless of their status (Normal/Closed) as the lookup does not filter by status in the provided context.",
+  "source_rule_file": "rules_1764829928_Duplicate_account_opening_check.json",
+  "expected_keyword": "SUCCESS",
+  "timestamp": 1764833539
+}

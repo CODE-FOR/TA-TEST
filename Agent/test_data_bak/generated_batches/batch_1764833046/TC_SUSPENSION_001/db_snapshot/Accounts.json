@@ -1,0 +1,16 @@
+[
+  {
+    "distributorId": "DIST_A",
+    "accountId": "TA10001",
+    "idNo": "110101198001010000",
+    "name": "Alice Smith",
+    "status": "NORMAL"
+  },
+  {
+    "distributorId": "DIST_A",
+    "accountId": "TA10002",
+    "idNo": "110101198001010001",
+    "name": "Bob Jones",
+    "status": "NORMAL"
+  }
+]

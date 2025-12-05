@@ -1,0 +1,9 @@
+{
+  "case_id": "TC_RED_003_INSUFFICIENT_SHARES",
+  "description": "Verify that a redemption request exceeding available shares is rejected by the TA system immediately or during validation, resulting in a TA_REJECTED status and specific error message.",
+  "source_rule_id": "BR_REDEEM_REJECTION_MSG",
+  "source_rule_logic": "If the requested redemption shares exceed the available shares, the transaction must be marked with a rejected status (e.g., TA_REJECTED) and the error message must be set to 'INSUFFICIENT_SHARES'.",
+  "source_rule_file": "rules_1764829874_Redeem_insufficient_shares_check.json",
+  "expected_keyword": "INSUFFICIENT_SHARES",
+  "timestamp": 1764833112
+}

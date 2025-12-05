@@ -1,0 +1,7 @@
+[
+  {
+    "rule_id": "ACC_ID_GENERATION_STRATEGY",
+    "logic": "When opening a new account, the system generates the Account ID by concatenating the prefix 'TA' with the absolute value of the hash code of the customer's ID number (`String newAccId = \"TA\" + Math.abs(idNo.hashCode())`). This generation method is used as the primary key for the Account Map.",
+    "condition": "Triggered in `AccountProcessor.java` when `bizCode` is '001' (Account Open) and the provided `idNo` does not already exist in the repository."
+  }
+]

@@ -1,0 +1,9 @@
+[
+  {
+    "accountId": "TA_ACC_999",
+    "fundCode": "FUND01",
+    "totalShares": 1000.0,
+    "availableShares": 500.0,
+    "comment": "User has 1000 total, but only 500 available (perhaps 500 are frozen or pending)."
+  }
+]
