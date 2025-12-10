@@ -17,9 +17,8 @@ def get_retriever():
 @tool
 def lookup_business_rules(query: str) -> str:
     """
-    Search the QA Knowledge Base (Docs & Code) for business rules, 
-    validation logic, and system constraints.
-    Useful when you need to understand HOW the system works.
+    在QA知识库（文档与代码）中检索业务规则、校验逻辑与系统约束。
+    适用于需要理解系统运作方式的场景。回答请使用中文。
     """
     retriever = get_retriever()
     docs = retriever.invoke(query)
@@ -28,9 +27,9 @@ def lookup_business_rules(query: str) -> str:
 @tool
 def get_file_spec_definition(file_type_key: str) -> str:
     """
-    Get the detailed Interface Specification for a specific file type.
-    Args:
-        file_type_key: The key of the file type, e.g., 'DIST_TRADE', 'MGR_NAV', 'DIST_ACC'.
+    获取指定文件类型的详细接口规范。
+    参数:
+        file_type_key: 文件类型键，例如 'DIST_TRADE'、'MGR_NAV'、'DIST_ACC'。
     """
     spec = specs.FILE_SPECS.get(file_type_key)
     if spec:
@@ -39,5 +38,5 @@ def get_file_spec_definition(file_type_key: str) -> str:
 
 @tool
 def get_system_context() -> str:
-    """Get the high-level system context, look-through principles, and operation phases."""
+    """获取系统的业务上下文、穿透式原则和每日批处理阶段说明。"""
     return specs.SYSTEM_CONTEXT

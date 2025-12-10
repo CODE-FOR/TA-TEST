@@ -59,7 +59,7 @@ class Orchestrator:
         logger.info("Initializing Orchestrator...")
         if reindex:
             logger.info("Triggering Knowledge Base Ingestion...")
-            self.rag.ingest_knowledge_base()
+            self.rag_service.ingest_knowledge_base()
         
         # 确保目录存在
         os.makedirs(config.RULES_DIR, exist_ok=True)
@@ -91,10 +91,14 @@ class Orchestrator:
             
             # Agent 会自主调用 Tools (查文档、查代码、查规范)
             # 最终返回自然语言或 JSON 字符串
-            result_text = self.analyst.analyze(topic)
+            result_text = str(self.analyst.analyze(topic)).replace("'", '"')
             
             # 尝试从 Agent 的回复中提取 JSON 部分进行清洗和保存
-            cleaned_rules = self._extract_json_from_text(result_text)
+            try:
+                cleaned_rules = self._extract_json_from_text(result_text)
+            except Exception as e:
+                logger.error(f"Error extracting JSON from Agent output: {e}")
+                cleaned_rules = None
             
             if cleaned_rules:
                 # 文件名安全处理
@@ -241,7 +245,8 @@ class Orchestrator:
         """辅助方法：从 Agent 的自然语言回复中提取 JSON List"""
         try:
             return json.loads(text)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as e:
+            print(e)
             pass
         
         match = re.search(r"```json(.*?)```", text, re.DOTALL)
