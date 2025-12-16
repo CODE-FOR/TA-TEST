@@ -1,0 +1,150 @@
+2025-12-12 16:45:39,799 - TA_Agent_Orchestrator - INFO - Initializing Orchestrator...
+2025-12-12 16:45:39,799 - TA_Agent_Orchestrator - INFO - Initialization complete.
+2025-12-12 16:45:39,799 - TA_Agent_Orchestrator - INFO - 🚀 === PHASE 2: STRUCTURED GENERATION ===
+2025-12-12 16:45:39,800 - TA_Agent_Orchestrator - INFO - 📂 Batch Directory: ./test_data/generated_batches/batch_1765529139
+2025-12-12 16:45:39,800 - TA_Agent_Orchestrator - INFO - 📂 Processing Rules: rules_1765527284_账户全生命周期管理与T0即时交易的穿透式逻辑验证_覆盖T日新开户即交易_.json
+2025-12-12 16:45:39,805 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 穿透式账户关联原则...
+2025-12-12 16:46:38,572 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_CORE_001_01
+2025-12-12 16:46:38,578 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_CORE_001_02
+2025-12-12 16:46:38,580 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 开户唯一性校验...
+2025-12-12 16:47:28,866 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_OPEN_001_SUCCESS
+2025-12-12 16:47:28,871 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_OPEN_002_DUPLICATE
+2025-12-12 16:47:28,872 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_OPEN_003_BATCH_MIXED
+2025-12-12 16:47:28,873 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 账户T0即时生效...
+2025-12-12 16:49:04,403 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_OPEN_002_001
+2025-12-12 16:49:04,409 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_OPEN_002_002
+2025-12-12 16:49:04,411 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 销户前置条件校验...
+2025-12-12 16:50:01,834 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_CLOSE_001
+2025-12-12 16:50:01,838 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_CLOSE_002
+2025-12-12 16:50:01,840 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_CLOSE_003
+2025-12-12 16:50:01,841 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_CLOSE_004
+2025-12-12 16:50:01,842 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 异常状态交易阻断...
+2025-12-12 16:50:50,983 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_STATUS_001
+2025-12-12 16:50:50,988 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_STATUS_002
+2025-12-12 16:50:50,990 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_STATUS_003
+2025-12-12 16:50:50,992 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: T日开户T日交易并行处理...
+2025-12-12 16:51:54,556 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_T0_PARALLEL_001
+2025-12-12 16:51:54,560 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_T0_PARALLEL_002
+2025-12-12 16:51:54,563 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 申购交易预校验...
+2025-12-12 16:52:44,704 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_PUR_001
+2025-12-12 16:52:44,709 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_PUR_002
+2025-12-12 16:52:44,711 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_PUR_003
+2025-12-12 16:52:44,712 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_PUR_004
+2025-12-12 16:52:44,713 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_PUR_005
+2025-12-12 16:52:44,714 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 赎回份额穿透式强校验...
+2025-12-12 16:53:45,943 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_TRADE_002_001
+2025-12-12 16:53:45,948 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_TRADE_002_002
+2025-12-12 16:53:45,950 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_TRADE_002_003
+2025-12-12 16:53:45,952 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_TRADE_002_004
+2025-12-12 16:53:45,953 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 份额T+1确认限制（非T0回转）...
+2025-12-12 16:54:30,312 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_CONFIRM_001
+2025-12-12 16:54:30,316 - TA_Agent_Orchestrator - INFO - 📂 Processing Rules: rules_1765528897_多文件接口交互的次序依赖性验证_NAV缺失或延迟对最终确认回报_TO_DIST_CONFIRM_的影.json
+2025-12-12 16:54:30,325 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 交易文件处理必须以 NAV 文件到达为前置条件，实行强依赖校验。...
+2025-12-12 16:55:23,454 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_NAV_PRE_001
+2025-12-12 16:55:23,460 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_NAV_PRE_002
+2025-12-12 16:55:23,462 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_NAV_PRE_003
+2025-12-12 16:55:23,463 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 文件处理存在严格次序依赖，必须先处理账户文件再处理交易文件。...
+2025-12-12 16:56:25,507 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_ACC_TRADE_SEQ_001
+2025-12-12 16:56:25,512 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_ACC_TRADE_SEQ_002
+2025-12-12 16:56:25,514 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_ACC_TRADE_SEQ_003
+2025-12-12 16:56:25,515 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 最终确认回报文件（TO_DIST_CONFIRM）的生成严格依赖于管理人的确认回执。...
+2025-12-12 16:57:46,493 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_CONFIRM_GEN_001
+2025-12-12 16:57:46,498 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_CONFIRM_GEN_002
+2025-12-12 16:57:46,501 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_CONFIRM_GEN_003
+2025-12-12 16:57:46,502 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: NAV 文件缺失属于阻断性异常，将导致交易申请无法提交且无法生成确认回报。...
+2025-12-12 16:58:36,675 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_NAV_MISSING_001
+2025-12-12 16:58:36,678 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_NAV_MISSING_002
+2025-12-12 16:58:36,681 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 系统支持 NAV 文件延迟到达后的自动阻塞解除与恢复处理。...
+2025-12-12 16:59:42,717 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_NAV_RECOVERY_001
+2025-12-12 16:59:42,719 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_NAV_RECOVERY_002
+2025-12-12 16:59:42,720 - TA_Agent_Orchestrator - INFO - 📂 Processing Rules: rules_1765527495_双批次运作机制闭环_从申报受理_Apply_到管理人确认_Confirm_的数据一致性与回退场景.json
+2025-12-12 16:59:42,729 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 开户申请时需校验全局唯一性，若证件号已存在，系统直接拒绝并返回错误码 ID_EXISTS。...
+2025-12-12 17:00:30,409 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_001_DUPLICATE_ID
+2025-12-12 17:00:30,413 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_001_SUCCESS_NEW_ID
+2025-12-12 17:00:30,415 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_001_BATCH_CONFLICT
+2025-12-12 17:00:30,416 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 当日新开户生成的账号具有即时生效性，允许在同一批次的后续交易申请中立即使用。...
+2025-12-12 17:01:36,684 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_002_001
+2025-12-12 17:01:36,687 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_002_002
+2025-12-12 17:01:36,690 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_002_003
+2025-12-12 17:01:36,693 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 销户申请必须针对存在且状态正常的账户，否则返回 ACCOUNT_NOT_FOUND 或相应错误。...
+2025-12-12 17:02:13,586 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_ACC_CLOSE_001
+2025-12-12 17:02:13,588 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_ACC_CLOSE_002
+2025-12-12 17:02:13,589 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_ACC_CLOSE_003
+2025-12-12 17:02:13,590 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_ACC_CLOSE_004
+2025-12-12 17:02:13,590 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 申购交易申请的金额必须为正数，否则直接拒单。...
+2025-12-12 17:03:11,116 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_TRADE_001_VALID
+2025-12-12 17:03:11,119 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_TRADE_001_ZERO
+2025-12-12 17:03:11,121 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_TRADE_001_NEGATIVE
+2025-12-12 17:03:11,122 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 赎回申请执行强一致性校验（看穿式），若申请份额超过TA本地可用持仓，直接拒单（TA_REJECTED）并不予报送管理人。...
+2025-12-12 17:04:02,234 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_002_001
+2025-12-12 17:04:02,235 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_002_002
+2025-12-12 17:04:02,236 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 确认回报阶段，仅当管理人返回确认成功状态时，TA系统才执行份额过账（updateHoldings）。...
+2025-12-12 17:05:04,324 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_CONFIRM_001
+2025-12-12 17:05:04,330 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_CONFIRM_002
+2025-12-12 17:05:04,332 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_CONFIRM_003
+2025-12-12 17:05:04,334 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_CONFIRM_004
+2025-12-12 17:05:04,335 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 确认回报阶段，若管理人返回失败状态，TA系统仅更新交易状态为 REJECTED，严禁执行份额变更。...
+2025-12-12 17:05:53,108 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_CONFIRM_002_PURCHASE_REJECT
+2025-12-12 17:05:53,112 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_CONFIRM_002_REDEEM_REJECT
+2025-12-12 17:05:53,114 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 交易处理遵循状态机锁定机制，只有处于“已报送”状态的交易才允许进行确认处理，防止重复执行。...
+2025-12-12 17:06:41,843 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_SYS_001_HAPPY_PATH
+2025-12-12 17:06:41,848 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_SYS_001_STATE_LOCK_REJECTED
+2025-12-12 17:06:41,850 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 最终回报文件必须包含全量交易结果，涵盖TA本地拒单、管理人拒单及确认成功的所有记录。...
+2025-12-12 17:07:38,364 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_SYS_002_FULL_COVERAGE
+2025-12-12 17:07:38,369 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 若管理人未发送当日净值文件，系统无法计算预估金额，必须挂起整个批次等待文件。...
+2025-12-12 17:08:56,504 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_EXCEPTION_001_NAV_MISSING
+2025-12-12 17:08:56,507 - TA_Agent_Orchestrator - INFO - 📂 Processing Rules: rules_1765528782_交易金额与份额的极端边界测试_零值_负值_极大值及小数精度的处理验证.json
+2025-12-12 17:08:56,516 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 申购交易的申请金额必须严格大于零...
+2025-12-12 17:09:47,996 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_001_01
+2025-12-12 17:09:47,998 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_001_02
+2025-12-12 17:09:48,001 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_001_03
+2025-12-12 17:09:48,004 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 赎回交易的申请份额必须严格大于零...
+2025-12-12 17:10:42,368 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_002_001
+2025-12-12 17:10:42,373 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 赎回份额不得超过当前账户的可用份额...
+2025-12-12 17:11:26,300 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_003_001
+2025-12-12 17:11:26,303 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_003_002
+2025-12-12 17:11:26,304 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_003_003
+2025-12-12 17:11:26,306 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_003_004
+2025-12-12 17:11:26,307 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 系统对交易金额与份额支持高精度透传，不执行自动截断或舍入...
+2025-12-12 17:12:47,496 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE004_001
+2025-12-12 17:12:47,502 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE004_002
+2025-12-12 17:12:47,504 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE004_003
+2025-12-12 17:12:47,505 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: TA系统不执行核心份额计算，仅依据管理人数据进行过账确认...
+2025-12-12 17:13:33,471 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE005_001
+2025-12-12 17:13:33,475 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE005_002
+2025-12-12 17:13:33,476 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 系统无业务层面的单笔交易数值上限限制...
+2025-12-12 17:14:19,613 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE006_001
+2025-12-12 17:14:19,617 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE006_002
+2025-12-12 17:14:19,620 - TA_Agent_Orchestrator - INFO - 📂 Processing Rules: rules_1765527381_赎回业务的份额强校验机制_超额_全额及部分赎回的边界值测试.json
+2025-12-12 17:14:19,630 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 赎回业务实行看穿式账户管理，必须基于账户的“可用份额”（Available Shares）进行强校验，而非“总份额”（Total Shares），需扣除冻结份额。...
+2025-12-12 17:15:20,493 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_001_01
+2025-12-12 17:15:20,497 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_001_02
+2025-12-12 17:15:20,498 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_001_03
+2025-12-12 17:15:20,499 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 若申请赎回份额大于账户可用份额（超额赎回），系统必须执行阻断性拒单，状态置为 TA_REJECTED，错误码为 INSUFFICIENT_SHARES，且不报送给基金管理人。...
+2025-12-12 17:16:25,188 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_002_001
+2025-12-12 17:16:25,192 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_002_002
+2025-12-12 17:16:25,193 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_002_003
+2025-12-12 17:16:25,194 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 若申请赎回份额小于或等于账户可用份额（全额或部分赎回），系统受理成功，状态置为 REPORTED_TO_MGR，并生成文件发送给基金管理人。...
+2025-12-12 17:17:23,410 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_003_001
+2025-12-12 17:17:23,413 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_003_002
+2025-12-12 17:17:23,415 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_003_003
+2025-12-12 17:17:23,416 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 系统不支持“自动降级为全额赎回”或“部分成功”机制，必须严格匹配申请数量。...
+2025-12-12 17:18:43,110 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 若账户持仓对象不存在（Holding 为 null），视为可用份额不足，系统直接拒单。...
+2025-12-12 17:19:26,241 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE005_001
+2025-12-12 17:19:26,244 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE005_002
+2025-12-12 17:19:26,245 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 系统不执行“最低赎回份额”或“最低持有份额”的硬性校验，以可用份额为唯一硬边界。...
+2025-12-12 18:55:47,219 - langchain_google_genai.chat_models - WARNING - Retrying langchain_google_genai.chat_models._chat_with_retry.<locals>._chat_with_retry in 2.0 seconds as it raised RetryError: Timeout of 600.0s exceeded, last exception: 503 Socket closed.
+2025-12-12 21:56:20,745 - langchain_google_genai.chat_models - WARNING - Retrying langchain_google_genai.chat_models._chat_with_retry.<locals>._chat_with_retry in 4.0 seconds as it raised DeadlineExceeded: 504 Deadline Exceeded.
+2025-12-13 18:52:32,574 - langchain_google_genai.chat_models - WARNING - Retrying langchain_google_genai.chat_models._chat_with_retry.<locals>._chat_with_retry in 8.0 seconds as it raised RetryError: Timeout of 600.0s exceeded, last exception: 503 failed to connect to all addresses; last error: UNAVAILABLE: ipv4:198.18.106.67:443: FD shutdown.
+2025-12-13 19:55:45,606 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE006_001
+2025-12-13 19:55:45,609 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE006_002
+2025-12-13 19:55:45,610 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE006_003
+2025-12-13 19:55:45,612 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE006_004
+2025-12-13 19:55:45,613 - TA_Agent_Orchestrator - INFO - ⚡ Generating Cases for: 申请赎回份额必须为正数，零值或负值申请应被系统拒绝。...
+2025-12-13 19:56:31,904 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_007_001
+2025-12-13 19:56:31,908 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_007_002
+2025-12-13 19:56:31,909 - TA_Agent_Orchestrator - INFO -       💾 Archiving Case: TC_RULE_007_003
+2025-12-13 19:56:31,911 - TA_Agent_Orchestrator - INFO - 
+✅ Generation Complete. Artifacts stored in ./test_data/generated_batches/batch_1765529139
+⚠️ Case Gen failed: Invalid json output: 
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langchain/errors/OUTPUT_PARSING_FAILURE 

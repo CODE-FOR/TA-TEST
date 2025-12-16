@@ -51,8 +51,8 @@ class TestStrategyPlannerAgent:
     """[Phase 0] 战略规划师: 使用 Provider Strategy (Native Structured Output)"""
     def __init__(self, model_name: str = "gemini-1.5-pro"):
         # 使用较高的 Temperature 以激发发散性思维
-        # self.llm = ChatGoogleGenerativeAI(model=model_name, temperature=0.7)
-        self.llm = ChatOpenAI(model=model_name, temperature=0.7)
+        self.llm = ChatGoogleGenerativeAI(model=model_name, temperature=0.7, timeout=10000)
+        # self.llm = ChatOpenAI(model=model_name, temperature=0.7)
     def plan(self, system_context: str, file_interfaces: str) -> List[str]:
         # Provider Strategy: 直接绑定 Schema，由 Gemini 原生强制输出结构
         structured_llm = self.llm.with_structured_output(TestStrategy)
@@ -94,7 +94,7 @@ class TestStrategyPlannerAgent:
 class BusinessRuleAnalystAgent:
     """[Phase 1] 规则分析师: Tool Calling Loop + Provider Strategy Extraction"""
     def __init__(self):
-        self.llm = ChatGoogleGenerativeAI(model="gemini-3-pro-preview", temperature=0)
+        self.llm = ChatGoogleGenerativeAI(model="gemini-3-pro-preview", temperature=0, timeout=10000)
         # self.llm = ChatOpenAI(model=config.OPENAI_MODEL, temperature=0)
         self.tools = [lookup_business_rules, get_system_context]
         
@@ -156,7 +156,7 @@ class BusinessRuleAnalystAgent:
 class TestCaseGeneratorAgent:
     """[Phase 2] 用例生成器: 使用 Parser 手动解析"""
     def __init__(self, model_name: str = "gemini-3-pro"):
-        self.llm = ChatGoogleGenerativeAI(model=model_name, temperature=0)
+        self.llm = ChatGoogleGenerativeAI(model=model_name, temperature=0, timeout=10000)
 
     def generate(self, rule_json: str, interface_context: str = "", system_context: str = "") -> List[dict]:
         # 1. 定义 Parser

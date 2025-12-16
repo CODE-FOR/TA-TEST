@@ -1,6 +1,7 @@
 import argparse
 import os
 import json
+import json5
 import time
 import shutil
 import logging
@@ -91,7 +92,7 @@ class Orchestrator:
             
             # Agent 会自主调用 Tools (查文档、查代码、查规范)
             # 最终返回自然语言或 JSON 字符串
-            result_text = str(self.analyst.analyze(topic)).replace("'", '"')
+            result_text = str(self.analyst.analyze(topic))
             
             # 尝试从 Agent 的回复中提取 JSON 部分进行清洗和保存
             try:
@@ -142,8 +143,8 @@ class Orchestrator:
             
             try:
                 with open(r_path, 'r', encoding='utf-8') as f:
-                    rules = json.load(f)
-            except json.JSONDecodeError:
+                    rules = json5.load(f)
+            except json5.JSONDecodeError:
                 logger.error(f"Invalid JSON in {r_file}, skipping.")
                 continue
 
@@ -244,22 +245,22 @@ class Orchestrator:
     def _extract_json_from_text(self, text):
         """辅助方法：从 Agent 的自然语言回复中提取 JSON List"""
         try:
-            return json.loads(text)
-        except json.JSONDecodeError as e:
+            return json5.loads(text)
+        except json5.JSONDecodeError as e:
             print(e)
             pass
         
         match = re.search(r"```json(.*?)```", text, re.DOTALL)
         if match:
             try:
-                return json.loads(match.group(1))
-            except json.JSONDecodeError:
+                return json5.loads(match.group(1))
+            except json5.JSONDecodeError:
                 pass
         
         match = re.search(r"(\[.*\])", text, re.DOTALL)
         if match:
             try:
-                return json.loads(match.group(1))
+                return json5.loads(match.group(1))
             except:
                 pass
         return None

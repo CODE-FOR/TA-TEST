@@ -6,3 +6,4 @@
 Agent/test_data/
 data/
 target/
+**/test_data*/
